@@ -4,7 +4,7 @@ import org.example.paymentservice.payment.domain.enums.PaymentStatus
 
 data class PaymentConfirmationResult (
     val status: PaymentStatus,
-    val failure: PaymentExecutionFailure? = null
+    val failure: PaymentFailure? = null
 ) {
     init {
         if (status == PaymentStatus.FAILURE) {

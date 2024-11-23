@@ -10,7 +10,7 @@ data class PaymentExecutionResult (
     val paymentKey: String,
     val orderId: String,
     val extraDetails: PaymentExtraDetails? = null,
-    val failure: PaymentExecutionFailure? = null,
+    val failure: PaymentFailure? = null,
     val isSuccess: Boolean,
     val isFailure: Boolean,
     val isUnknown: Boolean,
@@ -40,9 +40,4 @@ data class PaymentExtraDetails (
     val pspConfirmationStatus: PSPConfirmationStatus,
     val totalAmount: Long,
     val pspRawData: String
-)
-
-data class PaymentExecutionFailure(
-    val errorCode: String,
-    val message: String,
 )

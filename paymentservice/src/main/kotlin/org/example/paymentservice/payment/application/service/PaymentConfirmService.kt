@@ -15,6 +15,7 @@ class PaymentConfirmService (
     private val paymentStatusUpdatePort: PaymentStatusUpdatePort,
     private val paymentValidationPort: PaymentValidationPort,
     private val paymentExecutorPort: PaymentExecutorPort,
+    private val paymentErrorHandler: PaymentErrorHandler,
 ) : PaymentConfirmUseCase {
 
     override fun confirm(command: PaymentConfirmCommand): Mono<PaymentConfirmationResult> {
@@ -33,6 +34,6 @@ class PaymentConfirmService (
                 ).thenReturn(it)
             }
             .map { PaymentConfirmationResult(status = it.paymentStatus(), failure = it.failure) }
-//            .onErrorResume { paymentErrorHandler.handlePaymentConfirmationError(it, command) }
+            .onErrorResume { paymentErrorHandler.handlePaymentConfirmationError(it, command) }
     }
 }

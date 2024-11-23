@@ -1,16 +1,16 @@
 package org.example.paymentservice.payment.application.port.out.command
 
 import org.example.paymentservice.payment.domain.enums.PaymentStatus
-import org.example.paymentservice.payment.domain.result.PaymentExecutionFailure
 import org.example.paymentservice.payment.domain.result.PaymentExecutionResult
 import org.example.paymentservice.payment.domain.result.PaymentExtraDetails
+import org.example.paymentservice.payment.domain.result.PaymentFailure
 
 data class PaymentStatusUpdateCommand(
     val paymentKey: String,
     val orderId: String,
     val status: PaymentStatus,
     val extraDetails: PaymentExtraDetails? = null,
-    val failure: PaymentExecutionFailure? = null,
+    val failure: PaymentFailure? = null,
 ) {
 
     constructor(paymentExecutionResult: PaymentExecutionResult) : this(
