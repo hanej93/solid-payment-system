@@ -1,12 +1,16 @@
 package org.example.paymentservice.test
 
-import org.example.paymentservice.payment.domain.*
+import org.example.paymentservice.payment.domain.entity.PaymentEvent
+import org.example.paymentservice.payment.domain.entity.PaymentOrder
+import org.example.paymentservice.payment.domain.enums.PaymentMethod
+import org.example.paymentservice.payment.domain.enums.PaymentStatus
+import org.example.paymentservice.payment.domain.enums.PaymentType
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.transaction.reactive.TransactionalOperator
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import java.math.BigDecimal
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 class R2DBCPaymentDatabaseHelper (
     private val databaseClient: DatabaseClient,
@@ -29,7 +33,7 @@ class R2DBCPaymentDatabaseHelper (
                         paymentKey = results.first()["payment_key"] as String?,
                         paymentType = if (results.first()["type"] != null) PaymentType.get(results.first()["type"] as String) else null,
                         paymentMethod = if (results.first()["method"] != null) PaymentMethod.valueOf(results.first()["method"] as String) else null,
-                        approvedAt = if (results.first()["approved_at"] != null) (results.first()["approved_at"] as ZonedDateTime).toLocalDateTime() else null,
+                        approvedAt = if (results.first()["approved_at"] != null) (results.first()["approved_at"] as LocalDateTime) else null,
                         isPaymentDone = ((results.first()["is_payment_done"] as Byte).toInt() == 1),
                         paymentOrders = results.map { result ->
                             PaymentOrder(
@@ -52,10 +56,17 @@ class R2DBCPaymentDatabaseHelper (
     }
 
     override fun clean(): Mono<Void> {
-        return deletePaymentOrders()
+        return deletePaymentOrderHistories()
+            .flatMap { deletePaymentOrders() }
             .flatMap { deletePaymentsEvents() }
             .`as`(transactionalOperator::transactional)
             .then()
+    }
+
+    private fun deletePaymentOrderHistories(): Mono<Long> {
+        return databaseClient.sql(DELETE_PAYMENT_ORDER_HISTORY_QUERY)
+            .fetch()
+            .rowsUpdated()
     }
 
     private fun deletePaymentOrders(): Mono<Long> {
@@ -83,6 +94,10 @@ class R2DBCPaymentDatabaseHelper (
 
         val DELETE_PAYMENT_ORDER_QUERY = """
           DELETE FROM payment_orders
+        """.trimIndent()
+
+        val DELETE_PAYMENT_ORDER_HISTORY_QUERY = """
+          DELETE FROM payment_order_histories
         """.trimIndent()
     }
 }

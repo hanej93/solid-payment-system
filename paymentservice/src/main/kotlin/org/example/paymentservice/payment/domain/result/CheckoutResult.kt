@@ -1,4 +1,4 @@
-package org.example.paymentservice.payment.domain
+package org.example.paymentservice.payment.domain.result
 
 data class CheckoutResult (
     val amount: Long,

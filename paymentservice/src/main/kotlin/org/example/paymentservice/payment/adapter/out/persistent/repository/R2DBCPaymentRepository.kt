@@ -1,6 +1,6 @@
 package org.example.paymentservice.payment.adapter.out.persistent.repository
 
-import org.example.paymentservice.payment.domain.PaymentEvent
+import org.example.paymentservice.payment.domain.entity.PaymentEvent
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.reactive.TransactionalOperator

@@ -1,4 +1,4 @@
-package org.example.paymentservice.payment.application.port.`in`
+package org.example.paymentservice.payment.application.port.`in`.command
 
 data class CheckoutCommand (
     val cartId: Long,

@@ -1,5 +1,6 @@
-package org.example.paymentservice.payment.domain
+package org.example.paymentservice.payment.domain.entity
 
+import org.example.paymentservice.payment.domain.enums.PaymentStatus
 import java.math.BigDecimal
 
 data class PaymentOrder(

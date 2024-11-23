@@ -1,6 +1,6 @@
 package org.example.paymentservice.payment.adapter.out.web.product.client
 
-import org.example.paymentservice.payment.domain.Product
+import org.example.paymentservice.payment.domain.entity.Product
 import reactor.core.publisher.Flux
 
 interface ProductClient {

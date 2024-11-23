@@ -1,8 +1,8 @@
 package org.example.paymentservice.payment.application.service
 
 import org.assertj.core.api.Assertions.assertThat
-import org.example.paymentservice.payment.application.port.`in`.CheckoutCommand
-import org.example.paymentservice.payment.application.port.`in`.CheckoutUseCase
+import org.example.paymentservice.payment.application.port.`in`.command.CheckoutCommand
+import org.example.paymentservice.payment.application.port.`in`.usecase.CheckoutUseCase
 import org.example.paymentservice.test.PaymentDatabaseHelper
 import org.example.paymentservice.test.PaymentTestConfiguration
 import org.junit.jupiter.api.BeforeEach

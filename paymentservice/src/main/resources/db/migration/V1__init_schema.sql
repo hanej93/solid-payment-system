@@ -8,7 +8,7 @@ CREATE TABLE payment_events
     type            ENUM('NORMAL') NOT NULL,
     order_name      VARCHAR(255) NOT NULL,
     method          ENUM('EASY_PAY') NOT NULL,
-    psp_raw_date    JSON,
+    psp_raw_data    JSON,
     approved_at     DATETIME,
     created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP

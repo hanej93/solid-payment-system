@@ -10,6 +10,14 @@ spring:
   thymeleaf:
     cache: false
 
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        r2dbc: DEBUG
+        transaction: DEBUG
+
 PSP:
   toss:
     clientKey: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm

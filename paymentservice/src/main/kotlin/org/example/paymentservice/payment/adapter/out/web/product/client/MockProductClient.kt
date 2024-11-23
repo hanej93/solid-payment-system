@@ -1,6 +1,6 @@
 package org.example.paymentservice.payment.adapter.out.web.product.client
 
-import org.example.paymentservice.payment.domain.Product
+import org.example.paymentservice.payment.domain.entity.Product
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import java.math.BigDecimal

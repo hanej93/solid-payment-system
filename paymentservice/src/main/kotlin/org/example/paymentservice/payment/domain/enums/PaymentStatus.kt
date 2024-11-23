@@ -1,4 +1,4 @@
-package org.example.paymentservice.payment.domain
+package org.example.paymentservice.payment.domain.enums
 
 enum class PaymentStatus(description: String) {
     NOT_STARTED("결제 시작 전"),

@@ -1,11 +1,15 @@
 package org.example.paymentservice.payment.application.service
 
 import org.example.paymentservice.common.UseCase
-import org.example.paymentservice.payment.application.port.`in`.CheckoutCommand
-import org.example.paymentservice.payment.application.port.`in`.CheckoutUseCase
+import org.example.paymentservice.payment.application.port.`in`.command.CheckoutCommand
+import org.example.paymentservice.payment.application.port.`in`.usecase.CheckoutUseCase
 import org.example.paymentservice.payment.application.port.out.LoadProductPort
 import org.example.paymentservice.payment.application.port.out.SavePaymentPort
-import org.example.paymentservice.payment.domain.*
+import org.example.paymentservice.payment.domain.entity.PaymentEvent
+import org.example.paymentservice.payment.domain.entity.PaymentOrder
+import org.example.paymentservice.payment.domain.entity.Product
+import org.example.paymentservice.payment.domain.enums.PaymentStatus
+import org.example.paymentservice.payment.domain.result.CheckoutResult
 import reactor.core.publisher.Mono
 
 @UseCase

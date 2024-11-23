@@ -1,4 +1,4 @@
-package org.example.paymentservice.payment.domain
+package org.example.paymentservice.payment.domain.enums
 
 enum class PaymentType(description: String) {
     NORMAL("일반 결제");

@@ -1,6 +1,6 @@
 package org.example.paymentservice.test
 
-import org.example.paymentservice.payment.domain.PaymentEvent
+import org.example.paymentservice.payment.domain.entity.PaymentEvent
 import reactor.core.publisher.Mono
 
 interface PaymentDatabaseHelper {
