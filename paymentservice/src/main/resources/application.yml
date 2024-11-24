@@ -10,6 +10,77 @@ spring:
   thymeleaf:
     cache: false
 
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: pkc-gq2xn.asia-northeast3.gcp.confluent.cloud:9092
+#          configuration:
+#            security:
+#              protocol: SASL_SSL
+#            sasl:
+#              jaas:
+#                config: org.apache.kafka.common.security.plain.PlainLoginModule required username='2VLYZNOZZXP77H2Q' password='5icwWkLVF9uRMPX73ren9J75XETdw2lqloqEqk3Ih9ue/TBF3HPVypHqBRWUzy7K';
+#              mechanism: PLAIN
+#            client:
+#              dns:
+#                lookup: use_all_dns_ips
+#
+#          required-acks: all
+#          auto-create-topics: false
+#
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          auto-create-topics: false
+          required-acks: all
+      bindings:
+        consumer-in-0:
+          destination: payment
+          group: payment-service
+          content-type: application/json
+      function:
+        definition: consumer
+
+#        bindings:
+#          send-out-0:
+#            producer:
+#              record-metadata-channel: payment-result
+#
+#          wallet-in-0:
+#            consumer:
+#              configuration:
+#                isolation:
+#                  level: read_committed
+#              enable-dlq: true
+#              dlq-name: wallet_payment_dlq
+#
+#          ledger-in-0:
+#            consumer:
+#              configuration:
+#                isolation:
+#                  level: read_committed
+#              enable-dlq: true
+#              dlq-name: ledger_payment_dlq
+#
+#      bindings:
+#        send-out-0:
+#          destination: payment
+#          group: payment-service
+#
+#        wallet-in-0:
+#          destination: wallet
+#          group: payment-service
+#
+#        ledger-in-0:
+#          destination: ledger
+#          group: payment-service
+#
+#    function:
+#      definition: send;wallet;ledger
+
 logging:
   level:
     org:
@@ -23,3 +94,9 @@ PSP:
     clientKey: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm
     secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
     url: https://api.tosspayments.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings
