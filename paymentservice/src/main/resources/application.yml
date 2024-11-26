@@ -36,18 +36,20 @@ spring:
           brokers: localhost:9092
           auto-create-topics: false
           required-acks: all
+
+        bindings:
+          send-out-0:
+            producer:
+              record-metadata-channel: payment-result
+
       bindings:
-        consumer-in-0:
+        send-out-0:
           destination: payment
           group: payment-service
-          content-type: application/json
-      function:
-        definition: consumer
 
-#        bindings:
-#          send-out-0:
-#            producer:
-#              record-metadata-channel: payment-result
+      function:
+        definition: send
+
 #
 #          wallet-in-0:
 #            consumer:
