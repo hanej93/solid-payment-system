@@ -1,7 +1,7 @@
 package org.example.paymentservice.payment.adapter.out.stream
 
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessageType
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessageType
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

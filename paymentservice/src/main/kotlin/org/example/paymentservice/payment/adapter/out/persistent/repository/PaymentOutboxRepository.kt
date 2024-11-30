@@ -1,8 +1,8 @@
 package org.example.paymentservice.payment.adapter.out.persistent.repository
 
 import org.example.paymentservice.payment.application.port.out.command.PaymentStatusUpdateCommand
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessageType
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessageType
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 

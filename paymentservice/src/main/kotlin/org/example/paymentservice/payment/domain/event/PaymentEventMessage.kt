@@ -1,4 +1,4 @@
-package org.example.paymentservice.payment.domain.vo
+package org.example.paymentservice.payment.domain.event
 
 data class PaymentEventMessage (
   val type: PaymentEventMessageType,

@@ -6,8 +6,8 @@ import org.example.paymentservice.common.objectMapper
 import org.example.paymentservice.payment.adapter.out.stream.util.PartitionKeyUtil
 import org.example.paymentservice.payment.application.port.out.command.PaymentStatusUpdateCommand
 import org.example.paymentservice.payment.domain.enums.PaymentStatus
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessageType
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessageType
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux

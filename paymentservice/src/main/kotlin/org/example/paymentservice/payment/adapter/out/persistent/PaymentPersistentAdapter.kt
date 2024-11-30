@@ -8,7 +8,7 @@ import org.example.paymentservice.payment.adapter.out.persistent.repository.Paym
 import org.example.paymentservice.payment.application.port.out.*
 import org.example.paymentservice.payment.application.port.out.command.PaymentStatusUpdateCommand
 import org.example.paymentservice.payment.domain.entity.PaymentEvent
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
 import org.example.paymentservice.payment.domain.vo.PendingPaymentEvent
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

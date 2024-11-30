@@ -5,8 +5,8 @@ import org.example.paymentservice.common.Logger
 import org.example.paymentservice.common.StreamAdapter
 import org.example.paymentservice.payment.adapter.out.persistent.repository.PaymentOutboxRepository
 import org.example.paymentservice.payment.application.port.out.DispatchEventMessagePort
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessageType
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessageType
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.integration.IntegrationMessageHeaderAccessor

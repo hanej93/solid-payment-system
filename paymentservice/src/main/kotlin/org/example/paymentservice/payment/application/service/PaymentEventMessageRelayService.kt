@@ -5,12 +5,13 @@ import org.example.paymentservice.common.UseCase
 import org.example.paymentservice.payment.application.port.`in`.usecase.PaymentEventMessageRelayUseCase
 import org.example.paymentservice.payment.application.port.out.DispatchEventMessagePort
 import org.example.paymentservice.payment.application.port.out.LoadPendingPaymentEventMessagePort
+import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import reactor.core.scheduler.Schedulers
 import java.util.concurrent.TimeUnit
 
 @UseCase
-//@Profile("dev")
+@Profile("dev")
 class PaymentEventMessageRelayService (
   private val loadPendingPaymentEventMessagePort: LoadPendingPaymentEventMessagePort,
   private val dispatchEventMessagePort: DispatchEventMessagePort

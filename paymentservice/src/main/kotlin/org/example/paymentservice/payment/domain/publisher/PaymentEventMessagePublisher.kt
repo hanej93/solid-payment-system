@@ -1,6 +1,6 @@
 package org.example.paymentservice.payment.domain.publisher
 
-import org.example.paymentservice.payment.domain.vo.PaymentEventMessage
+import org.example.paymentservice.payment.domain.event.PaymentEventMessage
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 import org.springframework.transaction.reactive.TransactionalEventPublisher
