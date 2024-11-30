@@ -29,15 +29,11 @@ spring:
           auto-create-topics: false
           required-acks: all
 
-        bindings:
-          send-out-0:
-            producer:
-              record-metadata-channel: payment-result
-
       bindings:
         consume-in-0:
           destination: payment
           group: wallet-service
+
 
 logging:
   level:
