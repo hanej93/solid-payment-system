@@ -5,11 +5,11 @@ import org.example.paymentservice.payment.application.port.`in`.command.Checkout
 import org.example.paymentservice.payment.application.port.`in`.usecase.CheckoutUseCase
 import org.example.paymentservice.payment.application.port.out.LoadProductPort
 import org.example.paymentservice.payment.application.port.out.SavePaymentPort
-import org.example.paymentservice.payment.domain.entity.PaymentEvent
-import org.example.paymentservice.payment.domain.entity.PaymentOrder
-import org.example.paymentservice.payment.domain.entity.Product
 import org.example.paymentservice.payment.domain.enums.PaymentStatus
 import org.example.paymentservice.payment.domain.result.CheckoutResult
+import org.example.paymentservice.payment.domain.vo.PaymentEvent
+import org.example.paymentservice.payment.domain.vo.PaymentOrder
+import org.example.paymentservice.payment.domain.vo.Product
 import reactor.core.publisher.Mono
 
 @UseCase
@@ -36,7 +36,7 @@ class CheckoutService (
                     sellerId = it.sellerId,
                     orderId = command.idempotencyKey,
                     productId = it.id,
-                    amount = it.amount,
+                    amount = it.amount.toLong(),
                     paymentStatus = PaymentStatus.NOT_STARTED,
                 )
             }

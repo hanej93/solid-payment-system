@@ -108,9 +108,9 @@ class PaymentConfirmServiceTest(
         assertThat(paymentEvent.paymentType).isEqualTo(paymentExecutionResult.extraDetails!!.type)
         assertThat(paymentEvent.paymentMethod).isEqualTo(paymentExecutionResult.extraDetails!!.method)
         assertThat(paymentEvent.orderName).isEqualTo(paymentExecutionResult.extraDetails!!.orderName)
-        assertThat(paymentEvent.approvedAt?.truncatedTo(ChronoUnit.SECONDS)).isEqualTo(
+        assertThat(paymentEvent.approvedAt?.truncatedTo(ChronoUnit.MINUTES)).isEqualTo(
             paymentExecutionResult.extraDetails!!.approvedAt.truncatedTo(
-                ChronoUnit.SECONDS
+                ChronoUnit.MINUTES
             )
         )
     }

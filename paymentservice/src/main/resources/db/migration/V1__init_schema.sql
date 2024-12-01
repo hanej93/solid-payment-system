@@ -140,11 +140,10 @@ END $$
 
 DELIMITER ;
 
-INSERT INTO ledger_transactions (description, reference_id, reference_type, order_id, idempotency_key)
-VALUES ('Test Transaction', 1, 'Test Type', 'test_order_id_1', 'test_idempotency_key_1');
-
-INSERT INTO ledger_entries (amount, account_id, transaction_id, type)
-VALUES (100.00, 1, 11, 'CREDIT'), (200.00, 2, 11, 'DEBIT');
+# INSERT INTO ledger_transactions (description, reference_id, reference_type, order_id, idempotency_key)
+# VALUES ('Test Transaction', 1, 'Test Type', 'test_order_id_1', 'test_idempotency_key_1');
+# INSERT INTO ledger_entries (amount, account_id, transaction_id, type)
+# VALUES (100.00, 1, 11, 'CREDIT'), (200.00, 2, 11, 'DEBIT');
 
 
 DELIMITER $$
@@ -165,5 +164,24 @@ CREATE TRIGGER payment_delete_before
 BEGIN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Delete are not allowed on this table.';
 end $$
+
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER after_payment_order_update
+AFTER UPDATE ON payment_orders
+FOR EACH ROW
+BEGIN
+    IF NEW.ledger_updated = TRUE AND NEW.wallet_updated = TRUE THEN
+        IF (SELECT COUNT(*)
+            FROM payment_orders
+            WHERE payment_event_id = NEW.payment_event_id
+              AND (ledger_updated = FALSE OR wallet_updated = FALSE)) = 0 THEN
+            UPDATE payment_events
+            SET is_payment_done = TRUE
+            WHERE id = NEW.payment_event_id;
+        END if;
+    END if;
+end $$;
 
 DELIMITER ;

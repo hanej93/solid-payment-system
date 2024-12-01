@@ -3,7 +3,7 @@ package org.example.paymentservice.payment.application.port.out
 import org.example.paymentservice.payment.domain.vo.PaymentEvent
 import reactor.core.publisher.Mono
 
-interface SavePaymentPort {
+interface LoadPaymentPort {
 
-    fun save(paymentEvent: PaymentEvent): Mono<Void>
+  fun getPayment(orderId: String): Mono<PaymentEvent>
 }

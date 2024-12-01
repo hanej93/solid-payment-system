@@ -1,10 +1,10 @@
 package org.example.paymentservice.test
 
-import org.example.paymentservice.payment.domain.entity.PaymentEvent
-import org.example.paymentservice.payment.domain.entity.PaymentOrder
 import org.example.paymentservice.payment.domain.enums.PaymentMethod
 import org.example.paymentservice.payment.domain.enums.PaymentStatus
 import org.example.paymentservice.payment.domain.enums.PaymentType
+import org.example.paymentservice.payment.domain.vo.PaymentEvent
+import org.example.paymentservice.payment.domain.vo.PaymentOrder
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.transaction.reactive.TransactionalOperator
 import reactor.core.publisher.Mono
@@ -42,7 +42,7 @@ class R2DBCPaymentDatabaseHelper (
                                 sellerId = result["seller_id"] as Long,
                                 orderId = result["order_id"] as String,
                                 productId = result["product_id"] as Long,
-                                amount = result["amount"] as BigDecimal,
+                                amount = (result["amount"] as BigDecimal).toLong(),
                                 paymentStatus = PaymentStatus.get(result["payment_order_status"] as String),
                                 isLedgerUpdated = ((result["ledger_updated"]) as Byte).toInt() == 1,
                                 isWalletUpdated = ((result["wallet_updated"]) as Byte).toInt() == 1

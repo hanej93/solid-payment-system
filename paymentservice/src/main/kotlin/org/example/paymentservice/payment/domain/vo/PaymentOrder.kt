@@ -1,7 +1,6 @@
-package org.example.paymentservice.payment.domain.entity
+package org.example.paymentservice.payment.domain.vo
 
 import org.example.paymentservice.payment.domain.enums.PaymentStatus
-import java.math.BigDecimal
 
 data class PaymentOrder(
     val id: Long? = null,
@@ -9,7 +8,7 @@ data class PaymentOrder(
     val sellerId: Long,
     val productId: Long,
     val orderId: String,
-    val amount: BigDecimal,
+    val amount: Long,
     val paymentStatus: PaymentStatus,
     private var isLedgerUpdated: Boolean = false,
     private var isWalletUpdated: Boolean = false,
@@ -18,4 +17,12 @@ data class PaymentOrder(
     fun isLedgerUpdated(): Boolean = isLedgerUpdated
 
     fun isWalletUpdated(): Boolean = isWalletUpdated
+
+    fun confirmWalletUpdate() {
+        isWalletUpdated = true
+    }
+
+    fun confirmLedgerUpdate() {
+        isLedgerUpdated = true
+    }
 }
