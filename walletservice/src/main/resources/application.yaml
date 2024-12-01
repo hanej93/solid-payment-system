@@ -26,8 +26,11 @@ spring:
       kafka:
         binder:
           brokers: localhost:9092
-          auto-create-topics: false
+          auto-create-topics: true
           required-acks: all
+          consumer-properties:
+            enable.auto.commit: false
+            isolation.level: read_committed
           transaction:
             transaction-id-prefix: wallet-
             producer:
@@ -36,11 +39,21 @@ spring:
                   timeout:
                     ms: 30000
 
+        bindings:
+          consume-in-0:
+            consumer:
+              enable-dlq: true
+              dlq-name: payment_wallet_dlq
+
       bindings:
         consume-in-0:
           destination: payment
           group: wallet-service
+          consumer:
+            max-attempts: 5
 
+      function:
+        definition: consume
 
 logging:
   level:

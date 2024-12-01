@@ -11,16 +11,16 @@ import java.util.function.Consumer
 
 @Configuration
 @StreamAdapter
-class PaymentEventMessageHandler (
+class PaymentEventMessageHandler(
     private val settlementUseCase: SettlementUseCase,
-  private val streamBridge: StreamBridge
+    private val streamBridge: StreamBridge
 ) {
 
-  @Bean
-  fun consume(): Consumer<Message<PaymentEventMessage>> {
-    return Consumer { message ->
-      val walletEventMessage = settlementUseCase.processSettlement(message.payload)
-      streamBridge.send("wallet", walletEventMessage)
+    @Bean
+    fun consume(): Consumer<Message<PaymentEventMessage>> {
+        return Consumer { message ->
+            val walletEventMessage = settlementUseCase.processSettlement(message.payload)
+            streamBridge.send("wallet", walletEventMessage)
+        }
     }
-  }
 }
