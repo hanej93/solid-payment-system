@@ -82,3 +82,88 @@ CREATE TABLE wallet_transactions (
                                      updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 #     FOREIGN KEY (wallet_id) REFERENCES wallets(id)
 );
+
+CREATE TABLE ledger_transactions (
+                                      id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+                                      description VARCHAR(100) NOT NULL ,
+                                      reference_id BIGINT NOT NULL ,
+                                      reference_type VARCHAR(50),
+                                      order_id VARCHAR(255),
+                                      idempotency_key VARCHAR(255) UNIQUE NOT NULL ,
+                                      created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE accounts (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+                          name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE ledger_entries (
+                                id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+                                amount DECIMAL(15, 2) NOT NULL,
+                                account_id BIGINT NOT NULL ,
+                                transaction_id BIGINT NOT NULL ,
+                                type ENUM('CREDIT', 'DEBIT') NOT NULL,
+                                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                FOREIGN KEY (transaction_id) REFERENCES ledger_transactions(id),
+                                FOREIGN KEY (account_id) REFERENCES accounts(id)
+);
+
+INSERT INTO accounts (id, name) VALUES (1, 'REVENUE');
+INSERT INTO accounts (id, name) VALUES (2, 'ITEM_BUYER');
+
+INSERT INTO wallets (user_id, balance, version, created_at, updated_at) VALUES ( 1, 126000.00, 5, '2024-12-01 11:21:18', '2024-12-01 11:33:55');
+INSERT INTO wallets (user_id, balance, version, created_at, updated_at) VALUES ( 2, 6000.00, 3, '2024-12-01 11:21:18', '2024-12-01 11:21:18');
+
+
+DELIMITER $$
+
+CREATE TRIGGER check_balance_after_insert
+AFTER INSERT ON ledger_entries
+FOR EACH ROW
+BEGIN
+    DECLARE credit_sum DECIMAL(15, 2);
+    DECLARE debit_sum DECIMAL(15, 2);
+
+    SELECT SUM(amount) INTO credit_sum
+    FROM ledger_entries
+    WHERE transaction_id = NEW.transaction_id AND type = 'CREDIT';
+
+    SELECT SUM(amount) INTO debit_sum
+    FROM ledger_entries
+    WHERE transaction_id = NEW.transaction_id AND type = 'DEBIT';
+
+    IF NOT (credit_sum - debit_sum = 0) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The sum of CREDIT and DEBIT amounts does not balance to zero';
+    end if;
+END $$
+
+DELIMITER ;
+
+INSERT INTO ledger_transactions (description, reference_id, reference_type, order_id, idempotency_key)
+VALUES ('Test Transaction', 1, 'Test Type', 'test_order_id_1', 'test_idempotency_key_1');
+
+INSERT INTO ledger_entries (amount, account_id, transaction_id, type)
+VALUES (100.00, 1, 11, 'CREDIT'), (200.00, 2, 11, 'DEBIT');
+
+
+DELIMITER $$
+CREATE TRIGGER payment_update_before
+BEFORE UPDATE ON ledger_entries
+FOR EACH ROW
+BEGIN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Updates are not allowed on this table.';
+end $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER payment_delete_before
+    BEFORE DELETE ON ledger_entries
+    FOR EACH ROW
+BEGIN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Delete are not allowed on this table.';
+end $$
+
+DELIMITER ;
